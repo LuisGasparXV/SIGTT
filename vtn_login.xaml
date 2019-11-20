@@ -1,0 +1,52 @@
+﻿<Window x:Class="prototipo_interfaz.vtn_login"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:prototipo_interfaz"
+        mc:Ignorable="d"
+        Title="vtn_login" Height="400" Width="420" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Background="Transparent" PreviewMouseLeftButtonDown="Border_PreviewMouseLeftButtonDown">
+            <Grid>
+                <materialDesign:ColorZone Mode="PrimaryDark" Background="#FFE86318">
+                    <StackPanel HorizontalAlignment="Right">
+                        <Button x:Name="btn_cerrarlog" Width="30" Height="30" Padding="0" Click="Btn_cerrarlog_Click" Background="#FFE86318" BorderBrush="#FFE86318">
+                            <materialDesign:PackIcon Kind="WindowClose"/>
+                        </Button>
+                    </StackPanel>
+                </materialDesign:ColorZone>
+            </Grid>
+        </Border>
+        <Grid Grid.Row="1">
+            <materialDesign:ColorZone Mode="PrimaryMid" Background="#FFF7812D">
+                <TextBlock Text="Bienvenido" FontSize="35" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30 50 0 10" Foreground="White"/>
+            </materialDesign:ColorZone>
+        </Grid>
+        <Grid Grid.Row="2">
+            <StackPanel Orientation="Vertical" Margin="40 20 0 0">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Height="20" Width="20" Kind="Account" Foreground="{Binding ElementName=txt_usuario, Path=BorderBrush}" VerticalAlignment="Bottom" Margin="0 5"/>
+                    <TextBox x:Name="txt_usuario" Width="300" materialDesign:HintAssist.Hint="Usuario" materialDesign:HintAssist.IsFloating="True" FontSize="16" Margin="5 0 0 0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0 40 0 0">
+                    <materialDesign:PackIcon Height="20" Width="20" Kind="Key" Foreground="{Binding ElementName=txt_contraseña, Path=BorderBrush}" VerticalAlignment="Bottom" Margin="0 5"/>
+                    <PasswordBox x:Name="txt_contraseña" Width="300" materialDesign:HintAssist.Hint="Contraseña" materialDesign:HintAssist.IsFloating="True" FontSize="16" Margin="5 0 0 0"/>
+                </StackPanel>
+                <Button x:Name="btn_iniciosesion" Style="{DynamicResource MaterialDesignRaisedAccentButton}" Content="Iniciar" Margin="130,40,0,0" HorizontalAlignment="Left" Width="80" Click="Btn_iniciosesion_Click"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
