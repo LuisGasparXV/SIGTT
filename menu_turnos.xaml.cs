@@ -34,7 +34,7 @@ namespace prototipo_interfaz
             {
                 conexion.Open();
                 
-                MySqlCommand comando = new MySqlCommand("SELECT id_turno, DATE_FORMAT(fecha_turno,'%d/%m/%Y') fecha_turno,TIME_FORMAT(hora_turno, '%H:%i') hora_turno,nya_cliente,telef_cliente,nya_tatuador,cod_tatuaje,taman_tatuaje,lugar_cuerpo, TIME_FORMAT(tiempo_tatuaje, '%H:%i') duracion,costo_tatuaje " +
+                MySqlCommand comando = new MySqlCommand("SELECT id_turno, DATE_FORMAT(fecha_turno,'%d/%m/%Y') fecha_turno,TIME_FORMAT(hora_turno, '%H:%i') hora_turno,nya_cliente,telef_cliente,nya_tatuador,cod_tatuaje,taman_tatuaje,lugar_cuerpo, TIME_FORMAT(tiempo_tatuaje, '%H:%i') duracion,costo_tatuaje,modulos_tiempo " +
                     "FROM turnos " +
                     "INNER JOIN clientes ON turnos.idfk_cliente = clientes.id_cliente " +
                     "INNER JOIN tatuadores ON turnos.idfk_tatuador = tatuadores.id_tatuador " +

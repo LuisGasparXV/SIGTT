@@ -28,6 +28,8 @@ namespace prototipo_interfaz
         MySqlConnection conexion = new MySqlConnection("Server = localhost; Database=gestionturnos; Uid=root; Pwd=superad;");
         DataSet tabla_idfound = new DataSet();
         string query = "";
+        
+        
 
         public vtn_agregar_turno()
         {
@@ -35,16 +37,14 @@ namespace prototipo_interfaz
 
             //Bloquea los dias pasados en el datapicker
             dtp_fechaturno.BlackoutDates.AddDatesInPast();
-
-            CargarCBox cargaTat = new CargarCBox();
-            cargaTat.CargarTatuadores(cbx_tatuador);
             
+            
+            CargarCBox cargaTat = new CargarCBox();
+            cargaTat.CargarDuraciones(cbx_tiempotatu);
+            cargaTat.CargarTatuadores(cbx_tatuador);
 
+            
         }
-
-
-
-       
 
         private void Btn_guardarturno_Click(object sender, RoutedEventArgs e)
         {
@@ -87,7 +87,7 @@ namespace prototipo_interfaz
                 //MessageBox.Show("Encontró id cliente " + idfound_cliente);
 
                 //Creando nueva atencion
-                query = "INSERT INTO atenciones (cod_tatuaje, taman_tatuaje, lugar_cuerpo, tiempo_tatuaje, costo_tatuaje) VALUES ('"+cbx_motivo.Text+"','"+txt_tamañotatu.Text+"','"+cbx_lugar.Text+"','"+cbx_tiempotatu.Text+"','"+txt_costotatu.Text+"');";
+                query = "INSERT INTO atenciones (cod_tatuaje, taman_tatuaje, lugar_cuerpo, tiempo_tatuaje, costo_tatuaje, modulos_tiempo) VALUES ('"+cbx_motivo.Text+"','"+txt_tamañotatu.Text+"','"+cbx_lugar.Text+"','"+cbx_tiempotatu.Text+"','"+txt_costotatu.Text+"','"+cbx_tiempotatu.SelectedValue.ToString()+"');";
                 MySqlCommand comando3 = new MySqlCommand(query, conexion);
                 comando3.ExecuteNonQuery();
                 //MessageBox.Show("Se agrego atencion");
@@ -128,9 +128,67 @@ namespace prototipo_interfaz
             this.Close();
         }
 
+
+        private void Cbx_tatuador_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //dtp_fechaturno.IsEnabled = true;
+            try
+            {
+                if (dtp_fechaturno.SelectedDate.ToString() != "")
+                {
+                    
+                    CargarCBox cargaHora = new CargarCBox();
+                    cbx_horaturno.ItemsSource = null;
+                    try
+                    {
+                        cargaHora.CargarHorarios(cbx_horaturno, cbx_tatuador.SelectedValue.ToString(), dtp_fechaturno.SelectedDate.Value.ToString("yyyy/MM/dd"));
+                        
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error de clase cargarCBox: " + error.Message);
+                    }
+                }
+                
+            }
+            catch (Exception error2)
+            {
+
+                MessageBox.Show("Error de if: " + error2.Message);
+            }
+            
+            
+        }
+
         private void Dtp_fechaturno_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
+            //cbx_horaturno.IsEnabled = true;
 
+            try
+            {
+                if (cbx_tatuador.Text != "")
+                {
+                    CargarCBox cargaHora = new CargarCBox();
+                    cbx_horaturno.ItemsSource = null;
+                    try
+                    {
+                        cargaHora.CargarHorarios(cbx_horaturno, cbx_tatuador.SelectedValue.ToString(), dtp_fechaturno.SelectedDate.Value.ToString("yyyy/MM/dd"));
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error de clase cargarCBox: " + error.Message);
+                    }
+                }
+            }
+            catch (Exception error2)
+            {
+
+                MessageBox.Show("Error de if " + error2.Message);
+            }
+            
+            
+            
+            
         }
 
         private void Dtp_fechaturno_CalendarOpened(object sender, RoutedEventArgs e)
@@ -207,5 +265,7 @@ namespace prototipo_interfaz
                 e.Handled = true;
             }
         }
+
+        
     }
 }

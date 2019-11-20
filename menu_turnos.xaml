@@ -17,7 +17,7 @@
 
     <Grid Height="670" Width="1050" Background="#FFF9F9F9">
         <Label Content="Buscar turno por:" HorizontalAlignment="Left" Margin="30,45,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <DataGrid x:Name="grd_turnos" HorizontalAlignment="Left" Height="372" Width="831" Margin="30,100,0,0" VerticalAlignment="Top"  Background="#FFEEEEEE" HeadersVisibility="Column" SelectionChanged="Grd_turnos_SelectionChanged" />
+        <DataGrid x:Name="grd_turnos" HorizontalAlignment="Left" Height="519" Width="831" Margin="30,100,0,0" VerticalAlignment="Top"  Background="#FFEEEEEE" HeadersVisibility="Column" SelectionChanged="Grd_turnos_SelectionChanged" />
         <TextBox x:Name="txt_nombrecliente" Margin="180,24,0,0" Width="283" Height="50" materialDesign:HintAssist.Hint="Nombre de cliente" materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
         <Button x:Name="btn_agregarturno"  Content="Agregar Turno" HorizontalAlignment="Center" Margin="870,100,0,0" VerticalAlignment="Top" Width="135" FontSize="14" Click="Btn_agregarturno_Click" />

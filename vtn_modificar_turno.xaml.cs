@@ -35,10 +35,19 @@ namespace prototipo_interfaz
 
             //Bloquea los dias pasados en el datapicker
             dtp_fechaturno.BlackoutDates.AddDatesInPast();
+            
 
-            CargarCBox cargaTat = new CargarCBox();
-            cargaTat.CargarTatuadores(cbx_tatuador);
+            CargarCBox cargaCbox = new CargarCBox();
+            
+            cargaCbox.CargarDuraciones(cbx_tiempotatu);
+            cargaCbox.CargarTatuadores(cbx_tatuador);
+            /*if (cbx_tatuador.SelectedValue.ToString()!=null && dtp_fechaturno.SelectedDate.ToString()!=null)
+            {
+                cargaTat.CargarHorarios(cbx_horaturno, cbx_tatuador.SelectedValue.ToString(), dtp_fechaturno.SelectedDate.ToString());
+            }*/
         }
+
+        
 
         private void Btn_buscarturno_Click(object sender, RoutedEventArgs e)
         {
@@ -56,27 +65,55 @@ namespace prototipo_interfaz
                 adaptador.SelectCommand = comando0;
                 tabla_idfound.Clear();
                 adaptador.Fill(tabla_idfound);
-                idfound_turno = Int32.Parse(tabla_idfound.Tables[0].Rows[0]["id_turno"].ToString());
-                //MessageBox.Show("Se encotro el turno: "+idfound_turno);
-
-                cbx_motivo.Text = tabla_idfound.Tables[0].Rows[0]["cod_tatuaje"].ToString();
-                //cambio de text por display
-                cbx_tatuador.Text = tabla_idfound.Tables[0].Rows[0]["nya_tatuador"].ToString();
-                cbx_lugar.Text = tabla_idfound.Tables[0].Rows[0]["lugar_cuerpo"].ToString();
-                txt_tamañotatu.Text = tabla_idfound.Tables[0].Rows[0]["taman_tatuaje"].ToString();
-                cbx_tiempotatu.Text = tabla_idfound.Tables[0].Rows[0]["tiempo_tatuaje"].ToString();
-                txt_costotatu.Text = tabla_idfound.Tables[0].Rows[0]["costo_tatuaje"].ToString();
-                dtp_fechaturno.Text = tabla_idfound.Tables[0].Rows[0]["fecha_turno"].ToString();
-                cbx_horaturno.Text = tabla_idfound.Tables[0].Rows[0]["hora_turno"].ToString();
-
-                telefound_cliente = tabla_idfound.Tables[0].Rows[0]["telef_cliente"].ToString();
-                
                 conexion.Close();
+
+                if (tabla_idfound.Tables[0].Rows.Count == 0)
+                {
+                    //Limpiar_Campos();
+                    MessageBox.Show("No existe el turno reservado para el nombre ingesado");
+                }
+                else
+                {
+                    idfound_turno = Int32.Parse(tabla_idfound.Tables[0].Rows[0]["id_turno"].ToString());
+                    //MessageBox.Show("Se encotro el turno: "+idfound_turno);
+
+                    cbx_motivo.Text = tabla_idfound.Tables[0].Rows[0]["cod_tatuaje"].ToString();
+                    //cambio de text por display
+                    cbx_tatuador.Text = tabla_idfound.Tables[0].Rows[0]["nya_tatuador"].ToString();
+                    cbx_lugar.Text = tabla_idfound.Tables[0].Rows[0]["lugar_cuerpo"].ToString();
+                    txt_tamañotatu.Text = tabla_idfound.Tables[0].Rows[0]["taman_tatuaje"].ToString();
+                    cbx_tiempotatu.Text = tabla_idfound.Tables[0].Rows[0]["tiempo_tatuaje"].ToString();
+                    txt_costotatu.Text = tabla_idfound.Tables[0].Rows[0]["costo_tatuaje"].ToString();
+                    dtp_fechaturno.Text = tabla_idfound.Tables[0].Rows[0]["fecha_turno"].ToString();
+                    //dtp_fechaturno.SelectedDate = DateTime.ParseExact(tabla_idfound.Tables[0].Rows[0]["fecha_turno"].ToString(), "dd/MM/yyy", System.Globalization.CultureInfo.InvariantCulture);
+                    cbx_horaturno.Text = tabla_idfound.Tables[0].Rows[0]["hora_turno"].ToString();
+
+                    telefound_cliente = tabla_idfound.Tables[0].Rows[0]["telef_cliente"].ToString();
+
+                    CargarCBox cboxHorarios = new CargarCBox();
+                    try
+                    {
+                        cbx_horaturno.ItemsSource = null;
+                        cboxHorarios.CargarHorarios(cbx_horaturno, cbx_tatuador.SelectedValue.ToString(), dtp_fechaturno.SelectedDate.Value.ToString("yyyy/MM/dd"));
+                    }
+                    catch (Exception error)
+                    {
+
+                        MessageBox.Show("Error de clase cargarCBox: " + error.Message);
+                    }
+                }
+                
+                
+                //conexion.Close();
             }
             catch (Exception error)
             {
                 MessageBox.Show("No se pudo operar sobre la BD, Error: " + error.Message);
             }
+
+
+            
+            //cbx_horaturno.Text = tabla_idfound.Tables[0].Rows[0]["hora_turno"].ToString();
         }
 
         private void Btn_atcualizarturno_Click(object sender, RoutedEventArgs e)
@@ -162,6 +199,19 @@ namespace prototipo_interfaz
 
         }
 
+        private void Limpiar_Campos()
+        {
+            cbx_motivo.Text = null;
+            cbx_tatuador.Text = null;
+            cbx_lugar.Text = null;
+            txt_tamañotatu.Text = null;
+            cbx_tiempotatu.Text = null;
+            txt_costotatu.Text = null;
+            dtp_fechaturno.Text = null;
+            cbx_horaturno.Text = null;
+
+        }
+
         private void Txt_costotatu_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             int output;
@@ -177,6 +227,59 @@ namespace prototipo_interfaz
             if (!(e.Key >= Key.D0 && e.Key <= Key.D9 || e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9 || e.Key == Key.X || e.Key == Key.Space))
             {
                 e.Handled = true;
+            }
+        }
+
+        private void Cbx_tatuador_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                if (dtp_fechaturno.SelectedDate.ToString() != "")
+                {
+
+                    CargarCBox cargaHora = new CargarCBox();
+                    cbx_horaturno.ItemsSource = null;
+                    try
+                    {
+                        cargaHora.CargarHorarios(cbx_horaturno, cbx_tatuador.SelectedValue.ToString(), dtp_fechaturno.SelectedDate.Value.ToString("yyyy/MM/dd"));
+
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error de clase cargarCBox tatuador: " + error.Message);
+                    }
+                }
+
+            }
+            catch (Exception error2)
+            {
+
+                MessageBox.Show("Error de if: " + error2.Message);
+            }
+        }
+
+        private void Dtp_fechaturno_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                if (cbx_tatuador.Text != "")
+                {
+                    CargarCBox cargaHora = new CargarCBox();
+                    cbx_horaturno.ItemsSource = null;
+                    try
+                    {
+                        cargaHora.CargarHorarios(cbx_horaturno, cbx_tatuador.SelectedValue.ToString(), dtp_fechaturno.SelectedDate.Value.ToString("yyyy/MM/dd"));
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error de clase cargarCBox fecha: " + error.Message);
+                    }
+                }
+            }
+            catch (Exception error2)
+            {
+
+                MessageBox.Show("Error de if " + error2.Message);
             }
         }
     }

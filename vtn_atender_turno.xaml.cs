@@ -23,12 +23,64 @@ namespace prototipo_interfaz
     {
         MySqlConnection conexion = new MySqlConnection("Server = localhost; Database=gestionturnos; Uid=root; Pwd=superad;");
         DataSet tabla_idfound = new DataSet();
+        int idfound_turno = 0;
         string query = "";
-        
+        string telefound_cliente = "";
+
 
         public vtn_atender_turno()
         {
             InitializeComponent();
+            
+        }
+
+        private void Btn_buscarturno_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                idfound_turno = 0;
+                telefound_cliente = "";
+                
+                conexion.Open();
+                //Buscar el Id del turno para cargar los text box y check box y luego modificar
+                MySqlCommand comando0 = new MySqlCommand("SELECT id_turno, telef_cliente, edad_cliente, sexo_cliente, profesion, cant_tatuajes, hemofilia, daltonismo FROM turnos " +
+                    "INNER JOIN clientes ON turnos.idfk_cliente = clientes.id_cliente " +
+                    "INNER JOIN atenciones ON turnos.idfk_atencion=atenciones.id_atencion " +
+                    "INNER JOIN tatuadores ON turnos.idfk_tatuador=tatuadores.id_tatuador WHERE nya_cliente='" + txt_nombrecliente.Text + "' AND estado_turno='Reservado';", conexion);
+                MySqlDataAdapter adaptador = new MySqlDataAdapter();
+                adaptador.SelectCommand = comando0;
+                tabla_idfound.Clear();
+                adaptador.Fill(tabla_idfound);
+                conexion.Close();
+
+
+                if (tabla_idfound.Tables[0].Rows.Count == 0)
+                {
+                    btn_atenderturno.IsEnabled = false;
+                    MessageBox.Show("No existe el turno reservado para el nombre ingesado");
+                }
+                else
+                {
+                    if (tabla_idfound.Tables[0].Rows[0]["edad_cliente"] !=null)
+                    {
+                        txt_edadcliente.Text = tabla_idfound.Tables[0].Rows[0]["edad_cliente"].ToString();
+                        cbx_sexocliente.Text = tabla_idfound.Tables[0].Rows[0]["sexo_cliente"].ToString();
+                        txt_canttatoocliente.Text = tabla_idfound.Tables[0].Rows[0]["cant_tatuajes"].ToString();
+                        txt_profesioncliente.Text = tabla_idfound.Tables[0].Rows[0]["profesion"].ToString();
+                        cbx_hemofilia.Text = tabla_idfound.Tables[0].Rows[0]["hemofilia"].ToString();
+                        cbx_daltonismo.Text = tabla_idfound.Tables[0].Rows[0]["daltonismo"].ToString();
+                    }
+                    btn_atenderturno.IsEnabled = true;
+                }
+                
+                
+            }
+            catch (Exception error)
+            {
+                
+                MessageBox.Show("No se pudo operar sobre la BD, Error: " + error.Message);
+            }
+
             
         }
 
@@ -79,5 +131,7 @@ namespace prototipo_interfaz
         {
             this.Close();
         }
+
+        
     }
 }

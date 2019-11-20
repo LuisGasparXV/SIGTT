@@ -20,7 +20,7 @@
         </Grid>
         <TextBlock Text="Datos del cliente" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Margin="40,50,0,0" FontWeight="Bold" />
         <Separator HorizontalAlignment="Left" Height="30" Margin="30,60,0,0" VerticalAlignment="Top" Width="700"/>
-        <TextBox x:Name="txt_nombrecliente" Margin="30,100,0,0" Width="600" Height="50" materialDesign:HintAssist.Hint="Nombre" materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" />
+        <TextBox x:Name="txt_nombrecliente" Margin="30,100,0,0" Width="288" Height="50" materialDesign:HintAssist.Hint="Nombre" materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" />
         <TextBox x:Name="txt_edadcliente" Margin="30,180,0,0" Width="80" Height="50" materialDesign:HintAssist.Hint="Edad" materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" />
         <ComboBox x:Name="cbx_sexocliente" Height="42" Width="160" materialDesign:HintAssist.Hint="Sexo" materialDesign:HintAssist.IsFloating="True" Margin="240,190,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="16">
             <ComboBoxItem FontSize="16">Masculino</ComboBoxItem>
@@ -38,8 +38,9 @@
             <ComboBoxItem FontSize="16">Si</ComboBoxItem>
         </ComboBox>
         
-        <Button x:Name="btn_atenderturno" Content="Atender" HorizontalAlignment="Left" Margin="160,550,0,0" VerticalAlignment="Top" Width="180" Height="40" Click="Btn_atenderturno_Click" FontSize="18"/>
+        <Button x:Name="btn_atenderturno" Content="Atender" HorizontalAlignment="Left" Margin="160,550,0,0" VerticalAlignment="Top" Width="180" Height="40" Click="Btn_atenderturno_Click" FontSize="18" IsEnabled="False"/>
         <Button x:Name="btn_cancelaratender" Content="Cancelar" HorizontalAlignment="Left" Margin="465,550,0,0" VerticalAlignment="Top" Width="180" Height="40" Click="Btn_cancelaratender_Click" FontSize="18"/>
+        <Button x:Name="btn_buscarturno" Content="Buscar" HorizontalAlignment="Left" Margin="413,121,0,0" VerticalAlignment="Top" Click="Btn_buscarturno_Click"  Width="112" Height="29" FontSize="14"/>
 
     </Grid>
 </Window>
