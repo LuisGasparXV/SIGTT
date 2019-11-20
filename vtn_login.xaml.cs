@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MySql.Data.MySqlClient;
+
 
 namespace prototipo_interfaz
 {
@@ -19,6 +21,7 @@ namespace prototipo_interfaz
     /// </summary>
     public partial class vtn_login : Window
     {
+        MySqlConnection conexion = new MySqlConnection("Server=localhost; Database=gestionturnos; Uid=root; Pwd=superad;");
         public vtn_login()
         {
             InitializeComponent();
@@ -37,6 +40,17 @@ namespace prototipo_interfaz
 
         private void Btn_iniciosesion_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                conexion.Open();
+                
+                conexion.Close();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("No se pudo operar sobre la BD, Error: " + error.Message);
+            }
+
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
             this.Close();

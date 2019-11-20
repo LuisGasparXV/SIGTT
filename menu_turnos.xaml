@@ -17,28 +17,15 @@
 
     <Grid Height="670" Width="1050" Background="#FFF9F9F9">
         <Label Content="Buscar turno por:" HorizontalAlignment="Left" Margin="30,45,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <DataGrid HorizontalAlignment="Left" Height="372" Width="831" Margin="30,100,0,0" VerticalAlignment="Top"  Background="#FFEEEEEE" HeadersVisibility="Column" >
-            <DataGrid.Columns>
-                <DataGridTextColumn x:Name="dgcIndice" Header="#" Binding="{Binding Fecha}" Width="40"/>
-                <DataGridTextColumn x:Name="dgcFecha" Header="Fecha" Binding="{Binding Fecha}" Width="70"/>
-                <DataGridTextColumn x:Name="dgcHora" Header="Hora" Binding="{Binding Hora}" Width="60"/>
-                <DataGridTextColumn x:Name="dgcNombre" Header="Nombre y Apellido" Binding="{Binding NombreyAp}" Width="190"/>
-                <DataGridTextColumn x:Name="dgcMotivo" Header="Motivo" Binding="{Binding Motivo}" Width="80"/>
-                <DataGridTextColumn x:Name="dgcTatuador" Header="Tatuador" Binding="{Binding Tatuador}" Width="90"/>
-                <DataGridTextColumn x:Name="dgcTamano" Header="Tamaño" Binding="{Binding Tamano}" Width="75"/>
-                <DataGridTextColumn x:Name="dgcLugar" Header="Lugar" Binding="{Binding Lugar}" Width="80"/>
-                <DataGridTextColumn x:Name="dgcTiempo" Header="Tiempo" Binding="{Binding Tiempo}" Width="75"/>
-                <DataGridTextColumn x:Name="dgcCosto" Header="Costo" Binding="{Binding Costo}" Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <TextBox x:Name="txt_nombre" Margin="180,24,0,0" Width="300" Height="50" materialDesign:HintAssist.Hint="Nombre de cliente" materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox x:Name="txt_dni" Margin="530,24,0,0" Width="110" Height="50" materialDesign:HintAssist.Hint="DNI de cliente" materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <DataGrid x:Name="grd_turnos" HorizontalAlignment="Left" Height="372" Width="831" Margin="30,100,0,0" VerticalAlignment="Top"  Background="#FFEEEEEE" HeadersVisibility="Column" SelectionChanged="Grd_turnos_SelectionChanged" />
+        <TextBox x:Name="txt_nombrecliente" Margin="180,24,0,0" Width="283" Height="50" materialDesign:HintAssist.Hint="Nombre de cliente" materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
         <Button x:Name="btn_agregarturno"  Content="Agregar Turno" HorizontalAlignment="Center" Margin="870,100,0,0" VerticalAlignment="Top" Width="135" FontSize="14" Click="Btn_agregarturno_Click" />
-        <Button x:Name="btn_modifturno" Content="Modificar Turno" HorizontalAlignment="Center" Margin="870,145,0,0" VerticalAlignment="Top" Width="135" FontSize="14" IsEnabled="False"/>
-        <Button x:Name="btn_eliminarturno" Content="Eliminar Turno" HorizontalAlignment="Center" Margin="870,190,0,0" VerticalAlignment="Top" Width="135" FontSize="14" IsEnabled="False"/>
+        <Button x:Name="btn_modifturno" Content="Modificar Turno" HorizontalAlignment="Center" Margin="870,145,0,0" VerticalAlignment="Top" Width="135" FontSize="14" Click="Btn_modifturno_Click"/>
+        <Button x:Name="btn_eliminarturno" Content="Eliminar Turno" HorizontalAlignment="Center" Margin="870,190,0,0" VerticalAlignment="Top" Width="135" FontSize="14" Click="Btn_eliminarturno_Click"/>
 
         <Button x:Name="btn_atenderturno" Content="Atender Turno" HorizontalAlignment="Center" Margin="870,260,0,0" VerticalAlignment="Top" Width="135" FontSize="14" Click="Btn_atenderturno_Click"/>
+        <Button x:Name="btn_buscarturno"  Content="Buscar" HorizontalAlignment="Center" Margin="512,42,430,0" VerticalAlignment="Top" Width="108" FontSize="14" Click="Btn_buscarturno_Click" />
 
 
 

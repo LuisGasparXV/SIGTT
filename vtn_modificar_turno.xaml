@@ -1,4 +1,4 @@
-﻿<Window x:Class="prototipo_interfaz.vtn_agregar_turno"
+﻿<Window x:Class="prototipo_interfaz.vtn_modificar_turno"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         
         TextElement.FontWeight="Medium"
@@ -13,16 +13,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:prototipo_interfaz"
         mc:Ignorable="d"
-        Title="vtn_agregar_turno" Height="670" Width="850" WindowStartupLocation="CenterScreen" WindowStyle="None">
+        Title="vtn_atender_turno" Height="670" Width="850" WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Grid>
-        <Grid Margin="0,0,0,630" Background="#FF95C3F9">
-            <TextBlock Text="Agregar un nuevo turno" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+        <Grid Margin="0,0,0,630" Background="#FF82CCFF">
+            <TextBlock Text="Modificar turno asignado" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
         </Grid>
         <TextBlock Text="Cliente" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Margin="40,50,0,0" FontWeight="Bold" />
         <Separator HorizontalAlignment="Left" Height="30" Margin="30,60,0,0" VerticalAlignment="Top" Width="750"/>
         <TextBox x:Name="txt_nombrecliente" Margin="30,80,0,0" Width="300" Height="50" materialDesign:HintAssist.Hint="Nombre del cliente" materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
-        <TextBox x:Name="txt_telefcliente" Margin="465,80,0,0" Width="300" Height="50" materialDesign:HintAssist.Hint="Telefono" materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
-
         <TextBlock Text="Tatuaje" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Margin="38,180,0,0" FontWeight="Bold"/>
         <Separator HorizontalAlignment="Left" Height="30" Margin="30,190,0,0" VerticalAlignment="Top" Width="750"/>
         <ComboBox x:Name="cbx_motivo" Height="42" Width="180" materialDesign:HintAssist.Hint="Motivo" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="34,230,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16">
@@ -70,7 +68,7 @@
 
         <TextBlock Text="Turno" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Margin="34,390,0,0" FontWeight="Bold" />
         <Separator HorizontalAlignment="Left" Height="30" Margin="24,400,0,0" VerticalAlignment="Top" Width="741"/>
-        <DatePicker x:Name="dtp_fechaturno" Height="42" Width="150" materialDesign:HintAssist.Hint="Fecha del Turno" materialDesign:HintAssist.IsFloating="True" Margin="34,428,0,0" FontSize="16" HorizontalAlignment="Left"  VerticalAlignment="Top" Focusable="False" SelectedDateChanged="Dtp_fechaturno_SelectedDateChanged" CalendarOpened="Dtp_fechaturno_CalendarOpened"/>
+        <DatePicker x:Name="dtp_fechaturno" Height="42" Width="150" materialDesign:HintAssist.Hint="Fecha del Turno" materialDesign:HintAssist.IsFloating="True" Margin="34,428,0,0" FontSize="16" HorizontalAlignment="Left"  VerticalAlignment="Top" Focusable="False"/>
         <ComboBox x:Name="cbx_horaturno" Height="42" Width="150" materialDesign:HintAssist.Hint="Hora" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="294,428,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16">
             <ComboBoxItem FontSize="16" Content="09:00"/>
             <ComboBoxItem FontSize="16" Content="09:30"/>
@@ -95,10 +93,9 @@
         </ComboBox>
 
 
-        <Button x:Name="btn_guardarturno" Content="Guardar" HorizontalAlignment="Left" Margin="160,550,0,0" VerticalAlignment="Top" Click="Btn_guardarturno_Click" Width="180" Height="40" FontSize="18"/>
-        <Button x:Name="btn_cancelaragregarturn" Content="Cancelar" HorizontalAlignment="Left" Margin="465,550,0,0" VerticalAlignment="Top" Click="Btn_cancelarguardarturn_Click" Width="180" Height="40" FontSize="18" />
-        
-
+        <Button x:Name="btn_atcualizarturno" Content="Actualizar" HorizontalAlignment="Left" Margin="160,550,0,0" VerticalAlignment="Top" Click="Btn_atcualizarturno_Click" Width="180" Height="40" FontSize="18"/>
+        <Button x:Name="btn_cancelaragregarturn" Content="Cancelar" HorizontalAlignment="Left" Margin="465,550,0,0" VerticalAlignment="Top" Click="Btn_cancelaragregarturn_Click" Width="180" Height="40" FontSize="18" />
+        <Button x:Name="btn_buscarturno" Content="Buscar" HorizontalAlignment="Left" Margin="410,101,0,0" VerticalAlignment="Top" Click="Btn_buscarturno_Click" Width="112" Height="29" FontSize="14"/>
 
 
     </Grid>
