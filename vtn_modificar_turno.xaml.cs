@@ -32,6 +32,12 @@ namespace prototipo_interfaz
         public vtn_modificar_turno()
         {
             InitializeComponent();
+
+            //Bloquea los dias pasados en el datapicker
+            dtp_fechaturno.BlackoutDates.AddDatesInPast();
+
+            CargarCBox cargaTat = new CargarCBox();
+            cargaTat.CargarTatuadores(cbx_tatuador);
         }
 
         private void Btn_buscarturno_Click(object sender, RoutedEventArgs e)
@@ -54,6 +60,7 @@ namespace prototipo_interfaz
                 //MessageBox.Show("Se encotro el turno: "+idfound_turno);
 
                 cbx_motivo.Text = tabla_idfound.Tables[0].Rows[0]["cod_tatuaje"].ToString();
+                //cambio de text por display
                 cbx_tatuador.Text = tabla_idfound.Tables[0].Rows[0]["nya_tatuador"].ToString();
                 cbx_lugar.Text = tabla_idfound.Tables[0].Rows[0]["lugar_cuerpo"].ToString();
                 txt_tamañotatu.Text = tabla_idfound.Tables[0].Rows[0]["taman_tatuaje"].ToString();
@@ -79,7 +86,7 @@ namespace prototipo_interfaz
                 //>>>>>>>>>>>>>>> Falta probaaar dede aqui <<<<<<<<<
                 conexion.Open();
                 //Obtener el id del tatuador a partir del nombre en seleccionado del combobox
-                MySqlCommand comando0 = new MySqlCommand("SELECT id_tatuador, email_tatuador FROM tatuadores WHERE nya_tatuador='" + cbx_tatuador.Text + "';", conexion);
+                MySqlCommand comando0 = new MySqlCommand("SELECT id_tatuador, email_tatuador FROM tatuadores WHERE id_tatuador='" + cbx_tatuador.SelectedValue.ToString() + "';", conexion);
                 MySqlDataAdapter adaptador = new MySqlDataAdapter();
                 adaptador.SelectCommand = comando0;
                 DataSet tabla_idfoundtatuador = new DataSet();
@@ -100,7 +107,7 @@ namespace prototipo_interfaz
                 //Actualizar el turno
                 query = "UPDATE turnos SET fecha_turno='" + dtp_fechaturno.SelectedDate.Value.ToString("yyyy/MM/dd") +
                     "', hora_turno='" + cbx_horaturno.Text +
-                    "', idfk_tatuador=" + idfound_tatuador + " WHERE id_turno = " + idfound_turno + ";";
+                    "', idfk_tatuador=" + cbx_tatuador.SelectedValue.ToString() + " WHERE id_turno = " + idfound_turno + ";";
                 MySqlCommand comando2 = new MySqlCommand(query, conexion);
                 comando2.ExecuteNonQuery();
                 //MessageBox.Show("Se cambio el turno");
@@ -155,6 +162,22 @@ namespace prototipo_interfaz
 
         }
 
+        private void Txt_costotatu_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            int output;
+            if (!(int.TryParse(e.Text, out output)))
+            {
+                e.Handled = true;
+            }
 
+        }
+
+        private void Txt_tamañotatu_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!(e.Key >= Key.D0 && e.Key <= Key.D9 || e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9 || e.Key == Key.X || e.Key == Key.Space))
+            {
+                e.Handled = true;
+            }
+        }
     }
 }

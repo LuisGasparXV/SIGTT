@@ -20,8 +20,8 @@
         </Grid>
         <TextBlock Text="Cliente" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Margin="40,50,0,0" FontWeight="Bold" />
         <Separator HorizontalAlignment="Left" Height="30" Margin="30,60,0,0" VerticalAlignment="Top" Width="750"/>
-        <TextBox x:Name="txt_nombrecliente" Margin="30,80,0,0" Width="300" Height="50" materialDesign:HintAssist.Hint="Nombre del cliente" materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
-        <TextBox x:Name="txt_telefcliente" Margin="465,80,0,0" Width="300" Height="50" materialDesign:HintAssist.Hint="Telefono" materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
+        <TextBox x:Name="txt_nombrecliente" Margin="30,80,0,0" Width="300" Height="50" materialDesign:HintAssist.Hint="Nombre del cliente" materialDesign:HintAssist.IsFloating="True" KeyDown="Txt_nombrecliente_KeyDown" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
+        <TextBox x:Name="txt_telefcliente" Margin="465,80,0,0" Width="300" Height="50" materialDesign:HintAssist.Hint="Telefono" materialDesign:HintAssist.IsFloating="True" PreviewTextInput="Txt_telefcliente_PreviewTextInput" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" TextChanged="Txt_telefcliente_TextChanged"/>
 
         <TextBlock Text="Tatuaje" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Margin="38,180,0,0" FontWeight="Bold"/>
         <Separator HorizontalAlignment="Left" Height="30" Margin="30,190,0,0" VerticalAlignment="Top" Width="750"/>
@@ -37,9 +37,8 @@
             <ComboBoxItem FontSize="16">9</ComboBoxItem>
             <ComboBoxItem FontSize="16">10</ComboBoxItem>
         </ComboBox>
-        <ComboBox x:Name="cbx_tatuador" Width="160" Height="42" materialDesign:HintAssist.Hint="Tatuador" materialDesign:HintAssist.IsFloating="True" Margin="294,230,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16">
-            <ComboBoxItem FontSize="16">Luis Gaspar</ComboBoxItem>
-            <ComboBoxItem FontSize="16">Eduardo Hinojosa</ComboBoxItem>
+        <ComboBox x:Name="cbx_tatuador" Width="160" Height="42" materialDesign:HintAssist.Hint="Tatuador" materialDesign:HintAssist.IsFloating="True"  Margin="294,230,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16">
+            
         </ComboBox>
         <ComboBox x:Name="cbx_lugar" Width="160" Height="42" materialDesign:HintAssist.Hint="Lugar del cuerpo" materialDesign:HintAssist.IsFloating="True" Margin="554,230,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16">
             <ComboBoxItem FontSize="16">Brazo</ComboBoxItem>
@@ -53,7 +52,7 @@
             <ComboBoxItem FontSize="16">Cuello</ComboBoxItem>
             <ComboBoxItem FontSize="16">Otro</ComboBoxItem>
         </ComboBox>
-        <TextBox x:Name="txt_tamañotatu" Margin="34,298,0,0" Width="150" Height="50" materialDesign:HintAssist.Hint="Tamaño (cm x cm)" materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
+        <TextBox x:Name="txt_tamañotatu" Margin="34,298,0,0" Width="150" Height="50" materialDesign:HintAssist.Hint="Tamaño (cm x cm)" materialDesign:HintAssist.IsFloating="True" KeyDown="Txt_tamañotatu_KeyDown" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
         <ComboBox x:Name="cbx_tiempotatu" Height="42" Width="160" materialDesign:HintAssist.Hint="Tiempo de tatuado" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="294,306,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16">
             <ComboBoxItem FontSize="16" Content="00:30"/>
             <ComboBoxItem FontSize="16" Content="01:00"/>
@@ -66,7 +65,7 @@
             <ComboBoxItem FontSize="16" Content="04:30"/>
         </ComboBox>
 
-        <TextBox x:Name="txt_costotatu" Margin="554,298,0,0" Width="140" Height="50" materialDesign:HintAssist.Hint="Costo" materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" />
+        <TextBox x:Name="txt_costotatu" Margin="554,298,0,0" Width="140" Height="50" materialDesign:HintAssist.Hint="Costo" materialDesign:HintAssist.IsFloating="True" PreviewTextInput="Txt_costotatu_PreviewTextInput" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" />
 
         <TextBlock Text="Turno" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Margin="34,390,0,0" FontWeight="Bold" />
         <Separator HorizontalAlignment="Left" Height="30" Margin="24,400,0,0" VerticalAlignment="Top" Width="741"/>
@@ -95,7 +94,7 @@
         </ComboBox>
 
 
-        <Button x:Name="btn_guardarturno" Content="Guardar" HorizontalAlignment="Left" Margin="160,550,0,0" VerticalAlignment="Top" Click="Btn_guardarturno_Click" Width="180" Height="40" FontSize="18"/>
+        <Button x:Name="btn_guardarturno" Content="Guardar" HorizontalAlignment="Left" Margin="160,550,0,0" VerticalAlignment="Top" Click="Btn_guardarturno_Click" Width="180" Height="40" FontSize="18" />
         <Button x:Name="btn_cancelaragregarturn" Content="Cancelar" HorizontalAlignment="Left" Margin="465,550,0,0" VerticalAlignment="Top" Click="Btn_cancelarguardarturn_Click" Width="180" Height="40" FontSize="18" />
         
 

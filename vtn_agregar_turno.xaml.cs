@@ -32,23 +32,42 @@ namespace prototipo_interfaz
         public vtn_agregar_turno()
         {
             InitializeComponent();
+
+            //Bloquea los dias pasados en el datapicker
+            dtp_fechaturno.BlackoutDates.AddDatesInPast();
+
+            CargarCBox cargaTat = new CargarCBox();
+            cargaTat.CargarTatuadores(cbx_tatuador);
+            
+
         }
+
+
+
+       
 
         private void Btn_guardarturno_Click(object sender, RoutedEventArgs e)
         {
+
+            if (string.IsNullOrWhiteSpace(txt_nombrecliente.Text))
+            {
+                MessageBox.Show("Complete todos los campos");
+                this.Close();
+            }
+
             try
             {
                 conexion.Open();
 
-                //>>>>>> PROBAR PRIMERO AGREGANDO LAS TABLAS mas pequeñas y luego la central
+                
 
                 //Obtener el id del tatuador a partir del nombre en seleccionado del combobox
-                MySqlCommand comando0 = new MySqlCommand("SELECT id_tatuador, email_tatuador FROM tatuadores WHERE nya_tatuador='"+cbx_tatuador.Text+"';", conexion);
+                MySqlCommand comando0 = new MySqlCommand("SELECT email_tatuador FROM tatuadores WHERE id_tatuador='"+cbx_tatuador.SelectedValue.ToString()+"';", conexion);
                 MySqlDataAdapter adaptador = new MySqlDataAdapter();
                 adaptador.SelectCommand = comando0;
                 tabla_idfound.Clear();
                 adaptador.Fill(tabla_idfound);
-                int idfound_tatuador = Int32.Parse(tabla_idfound.Tables[0].Rows[0]["id_tatuador"].ToString());
+                //int idfound_tatuador = Int32.Parse(tabla_idfound.Tables[0].Rows[0]["id_tatuador"].ToString());
                 string correofound_tatuador = tabla_idfound.Tables[0].Rows[0]["email_tatuador"].ToString();
                 //MessageBox.Show("Encontró id tatu "+ idfound_tatuador);
 
@@ -79,41 +98,27 @@ namespace prototipo_interfaz
                 tabla_idfound.Clear();
                 adaptador4.Fill(tabla_idfound);
                 string idfound_atencion = tabla_idfound.Tables[0].Rows[0]["MAX(id_atencion)"].ToString();
-                //Datos para el correo
-                //string codigo_tatu = tabla_idfound.Tables[0].Rows[0]["cod_tatuaje"].ToString();
-                //string tamano_tatu = tabla_idfound.Tables[0].Rows[0]["taman_tatuaje"].ToString();
-                //string lugar_cuer = tabla_idfound.Tables[0].Rows[0]["lugar_cuerpo"].ToString();
-                //string tiempo_tatu = tabla_idfound.Tables[0].Rows[0]["tiempo_tatuaje"].ToString();
-                //MessageBox.Show("Encontró id atencion " + idfound_atencion);
 
-                
-                //query = "INSERT INTO turnos (id_turno, fecha, hora, idfk_cliente, idfk_atencion, idfk_tatuador, estado_turno, idfk_usuario) VALUES (5,'15/12/2019','00:30:00','4','2','1','Reservado', NULL);";
-                query = "INSERT INTO turnos (id_turno, fecha_turno, hora_turno, idfk_cliente, idfk_atencion, idfk_tatuador, estado_turno) VALUES ("+idfound_atencion+",'"+ dtp_fechaturno.SelectedDate.Value.ToString("yyyy/MM/dd")+"','"+cbx_horaturno.Text+"','"+idfound_cliente+"','"+idfound_atencion+"','"+idfound_tatuador+"','Reservado');";
+
+                //Preparando los datos del turno
+                query = "INSERT INTO turnos (id_turno, fecha_turno, hora_turno, idfk_cliente, idfk_atencion, idfk_tatuador, estado_turno) VALUES ("+idfound_atencion+",'"+ dtp_fechaturno.SelectedDate.Value.ToString("yyyy/MM/dd")+"','"+cbx_horaturno.Text+"','"+idfound_cliente+"','"+idfound_atencion+"','"+cbx_tatuador.SelectedValue.ToString()+"','Reservado');";
                 MySqlCommand comando = new MySqlCommand(query, conexion);
                 comando.ExecuteNonQuery();
                 //MessageBox.Show("Se agrego turo");
 
-                //Preparando los datos del turno
-                //MySqlCommand comando5 = new MySqlCommand("SELECT fecha_turno, DATE_FORMAT(fecha_turno,'%d/%m/%Y') fecha_turno, TIME_FORMAT(hora_turno, '%h:%i') hora_turno FROM turnos WHERE id_turno=" + idfound_atencion+";", conexion);
-                //MySqlDataAdapter adaptador5 = new MySqlDataAdapter();
-                //adaptador5.SelectCommand = comando4;
-                //tabla_idfound.Clear();
-                //adaptador5.Fill(tabla_idfound);
-                //Datos para el correo
-                //string fecha_turn = tabla_idfound.Tables[0].Rows[0]["fecha_turno"].ToString();
-                //string hora_turno = tabla_idfound.Tables[0].Rows[0]["hora_turno"].ToString();
                 
-
+                
                 conexion.Close();
-                //falta esta sentencia
+                
                 enviarCorreo(correofound_tatuador);
+                MessageBox.Show("El turno ha sido registrado correctamente y se ha enviado una notificación al tatuador");
             }
             catch (Exception error)
             {
                 MessageBox.Show("No se pudo operar sobre la BD, Error: "+error.Message);
             }
 
-            MessageBox.Show("El turno ha sido registrado correctamente y se ha enviado una notificación al tatuador");
+           
             this.Close();
         }
 
@@ -161,6 +166,46 @@ namespace prototipo_interfaz
                 MessageBox.Show("Error al enviar correo: " + error);
             }
 
+        }
+
+        private void Txt_telefcliente_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            int output;
+            if (!(int.TryParse(e.Text, out output)))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void Txt_telefcliente_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void Txt_costotatu_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            int output;
+            if (!(int.TryParse(e.Text, out output)))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void Txt_nombrecliente_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!(e.Key >= Key.A && e.Key <= Key.Z))
+            {
+                e.Handled = true;
+            }
+            
+        }
+
+        private void Txt_tamañotatu_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!(e.Key >= Key.D0 && e.Key <= Key.D9 || e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9 || e.Key == Key.X || e.Key == Key.Space))
+            {
+                e.Handled = true;
+            }
         }
     }
 }
