@@ -49,77 +49,95 @@ namespace prototipo_interfaz
         private void Btn_guardarturno_Click(object sender, RoutedEventArgs e)
         {
 
-            if (string.IsNullOrWhiteSpace(txt_nombrecliente.Text))
+            if (ValidarCampos()==false)
             {
-                MessageBox.Show("Complete todos los campos");
+                txtbl_camposvacios.Text = "Todos los campos son obligatorios";
+                txtbl_camposvacios.Foreground = Brushes.Red;
+            }
+            else
+            {
+                try
+                {
+                    string idfoundCliente;
+                    idfoundCliente = "";
+                    conexion.Open();
+
+                    //Obtener el id del tatuador a partir del nombre en seleccionado del combobox
+                    MySqlCommand comando0 = new MySqlCommand("SELECT email_tatuador FROM tatuadores WHERE id_tatuador='" + cbx_tatuador.SelectedValue.ToString() + "';", conexion);
+                    MySqlDataAdapter adaptador = new MySqlDataAdapter();
+                    adaptador.SelectCommand = comando0;
+                    tabla_idfound.Clear();
+                    adaptador.Fill(tabla_idfound);
+                    //int idfound_tatuador = Int32.Parse(tabla_idfound.Tables[0].Rows[0]["id_tatuador"].ToString());
+                    string correofound_tatuador = tabla_idfound.Tables[0].Rows[0]["email_tatuador"].ToString();
+                    //MessageBox.Show("Encontró id tatu "+ idfound_tatuador);
+
+                    //Buscamos en la tabla cliente si el cliente ya existe
+                    MySqlCommand comandoA = new MySqlCommand("SELECT id_cliente FROM clientes WHERE telef_cliente='" + txt_telefcliente.Text + "' AND nya_cliente='"+txt_nombrecliente.Text+"';", conexion);
+                    MySqlDataAdapter adaptadorA = new MySqlDataAdapter();
+                    adaptadorA.SelectCommand = comandoA;
+                    tabla_idfound.Clear();
+                    adaptadorA.Fill(tabla_idfound);
+                    //int idfound_tatuador = Int32.Parse(tabla_idfound.Tables[0].Rows[0]["id_tatuador"].ToString());
+                    
+                    //MessageBox.Show("Encontró id tatu "+ idfound_tatuador);
+
+                    if (tabla_idfound.Tables[0].Rows.Count == 1)
+                    {
+                        idfoundCliente = tabla_idfound.Tables[0].Rows[0]["id_cliente"].ToString();
+                    }
+                    else
+                    {
+                        //Creando nuevo cliente
+                        query = "INSERT INTO clientes (nya_cliente, telef_cliente) VALUES ('" + txt_nombrecliente.Text + "','" + txt_telefcliente.Text + "');";
+                        MySqlCommand comando1 = new MySqlCommand(query, conexion);
+                        comando1.ExecuteNonQuery();
+                        //MessageBox.Show("Se agrego cliente");
+
+                        //Buscando ultimo id cliente
+                        MySqlCommand comando2 = new MySqlCommand("SELECT MAX(id_cliente) FROM clientes;", conexion);
+                        MySqlDataAdapter adaptador2 = new MySqlDataAdapter();
+                        adaptador2.SelectCommand = comando2;
+                        tabla_idfound.Clear();
+                        adaptador2.Fill(tabla_idfound);
+                        idfoundCliente = tabla_idfound.Tables[0].Rows[0]["MAX(id_cliente)"].ToString();
+                        //MessageBox.Show("Encontró id cliente " + idfound_cliente);
+                    }
+
+                    //Creando nueva atencion
+                    query = "INSERT INTO atenciones (cod_tatuaje, taman_tatuaje, lugar_cuerpo, tiempo_tatuaje, costo_tatuaje, modulos_tiempo) VALUES ('" + cbx_motivo.Text + "','" + txt_tamañotatu.Text + "','" + cbx_lugar.Text + "','" + cbx_tiempotatu.Text + "','" + txt_costotatu.Text + "','" + cbx_tiempotatu.SelectedValue.ToString() + "');";
+                    MySqlCommand comando3 = new MySqlCommand(query, conexion);
+                    comando3.ExecuteNonQuery();
+                    //MessageBox.Show("Se agrego atencion");
+                    //Buscando ultimo id atencion
+                    
+                    MySqlCommand comando4 = new MySqlCommand("SELECT MAX(id_atencion), cod_tatuaje, taman_tatuaje, lugar_cuerpo, tiempo_tatuaje FROM atenciones;", conexion);
+                    MySqlDataAdapter adaptador4 = new MySqlDataAdapter();
+                    adaptador4.SelectCommand = comando4;
+                    tabla_idfound.Clear();
+                    adaptador4.Fill(tabla_idfound);
+                    string idfound_atencion = tabla_idfound.Tables[0].Rows[0]["MAX(id_atencion)"].ToString();
+                    
+                    //Preparando los datos del turno
+                    query = "INSERT INTO turnos (id_turno, fecha_turno, hora_turno, idfk_cliente, idfk_atencion, idfk_tatuador, estado_turno) VALUES (" + idfound_atencion + ",'" + dtp_fechaturno.SelectedDate.Value.ToString("yyyy/MM/dd") + "','" + cbx_horaturno.Text + "','" + idfoundCliente + "','" + idfound_atencion + "','" + cbx_tatuador.SelectedValue.ToString() + "','Reservado');";
+                    MySqlCommand comando = new MySqlCommand(query, conexion);
+                    comando.ExecuteNonQuery();
+                    //MessageBox.Show("Se agrego turo");
+
+                    conexion.Close();
+                    EnviarCorreo(correofound_tatuador);
+                    
+                    MessageBox.Show("El turno ha sido registrado correctamente y se ha enviado una notificación al tatuador");
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show("No se pudo operar sobre la BD, Error: " + error.Message);
+                }
                 this.Close();
             }
 
-            try
-            {
-                conexion.Open();
-
-                
-
-                //Obtener el id del tatuador a partir del nombre en seleccionado del combobox
-                MySqlCommand comando0 = new MySqlCommand("SELECT email_tatuador FROM tatuadores WHERE id_tatuador='"+cbx_tatuador.SelectedValue.ToString()+"';", conexion);
-                MySqlDataAdapter adaptador = new MySqlDataAdapter();
-                adaptador.SelectCommand = comando0;
-                tabla_idfound.Clear();
-                adaptador.Fill(tabla_idfound);
-                //int idfound_tatuador = Int32.Parse(tabla_idfound.Tables[0].Rows[0]["id_tatuador"].ToString());
-                string correofound_tatuador = tabla_idfound.Tables[0].Rows[0]["email_tatuador"].ToString();
-                //MessageBox.Show("Encontró id tatu "+ idfound_tatuador);
-
-                //Creando nuevo cliente
-                query = "INSERT INTO clientes (nya_cliente, telef_cliente) VALUES ('" + txt_nombrecliente.Text + "','" + txt_telefcliente.Text + "');";
-                MySqlCommand comando1 = new MySqlCommand(query, conexion);
-                comando1.ExecuteNonQuery();
-                //MessageBox.Show("Se agrego cliente");
-
-                //Buscando ultimo id cliente
-                MySqlCommand comando2 = new MySqlCommand("SELECT MAX(id_cliente) FROM clientes;", conexion);
-                MySqlDataAdapter adaptador2 = new MySqlDataAdapter();
-                adaptador2.SelectCommand = comando2;
-                tabla_idfound.Clear();
-                adaptador2.Fill(tabla_idfound);
-                string idfound_cliente = tabla_idfound.Tables[0].Rows[0]["MAX(id_cliente)"].ToString();
-                //MessageBox.Show("Encontró id cliente " + idfound_cliente);
-
-                //Creando nueva atencion
-                query = "INSERT INTO atenciones (cod_tatuaje, taman_tatuaje, lugar_cuerpo, tiempo_tatuaje, costo_tatuaje, modulos_tiempo) VALUES ('"+cbx_motivo.Text+"','"+txt_tamañotatu.Text+"','"+cbx_lugar.Text+"','"+cbx_tiempotatu.Text+"','"+txt_costotatu.Text+"','"+cbx_tiempotatu.SelectedValue.ToString()+"');";
-                MySqlCommand comando3 = new MySqlCommand(query, conexion);
-                comando3.ExecuteNonQuery();
-                //MessageBox.Show("Se agrego atencion");
-                //Buscando ultimo id atencion
-                MySqlCommand comando4 = new MySqlCommand("SELECT MAX(id_atencion), cod_tatuaje, taman_tatuaje, lugar_cuerpo, tiempo_tatuaje FROM atenciones;", conexion);
-                MySqlDataAdapter adaptador4 = new MySqlDataAdapter();
-                adaptador4.SelectCommand = comando4;
-                tabla_idfound.Clear();
-                adaptador4.Fill(tabla_idfound);
-                string idfound_atencion = tabla_idfound.Tables[0].Rows[0]["MAX(id_atencion)"].ToString();
-
-
-                //Preparando los datos del turno
-                query = "INSERT INTO turnos (id_turno, fecha_turno, hora_turno, idfk_cliente, idfk_atencion, idfk_tatuador, estado_turno) VALUES ("+idfound_atencion+",'"+ dtp_fechaturno.SelectedDate.Value.ToString("yyyy/MM/dd")+"','"+cbx_horaturno.Text+"','"+idfound_cliente+"','"+idfound_atencion+"','"+cbx_tatuador.SelectedValue.ToString()+"','Reservado');";
-                MySqlCommand comando = new MySqlCommand(query, conexion);
-                comando.ExecuteNonQuery();
-                //MessageBox.Show("Se agrego turo");
-
-                
-                
-                conexion.Close();
-                
-                enviarCorreo(correofound_tatuador);
-                MessageBox.Show("El turno ha sido registrado correctamente y se ha enviado una notificación al tatuador");
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show("No se pudo operar sobre la BD, Error: "+error.Message);
-            }
-
            
-            this.Close();
+            
         }
 
         private void Btn_cancelarguardarturn_Click(object sender, RoutedEventArgs e)
@@ -146,7 +164,7 @@ namespace prototipo_interfaz
                     }
                     catch (Exception error)
                     {
-                        MessageBox.Show("Error de clase cargarCBox: " + error.Message);
+                        MessageBox.Show("Error de clase cargarCBox_Tatuador: " + error.Message);
                     }
                 }
                 
@@ -162,8 +180,7 @@ namespace prototipo_interfaz
 
         private void Dtp_fechaturno_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            //cbx_horaturno.IsEnabled = true;
-
+            
             try
             {
                 if (cbx_tatuador.Text != "")
@@ -186,9 +203,6 @@ namespace prototipo_interfaz
                 MessageBox.Show("Error de if " + error2.Message);
             }
             
-            
-            
-            
         }
 
         private void Dtp_fechaturno_CalendarOpened(object sender, RoutedEventArgs e)
@@ -196,17 +210,17 @@ namespace prototipo_interfaz
 
         }
 
-        private void enviarCorreo(string correo_tatuador)
+        private void EnviarCorreo(string correo_tatuador)
         {
             MailMessage mail_turno = new MailMessage();
             mail_turno.To.Add(correo_tatuador);
             mail_turno.Subject = "Charly Music: Nuevo turno registrado";
-            mail_turno.SubjectEncoding = System.Text.Encoding.UTF8;
+            mail_turno.SubjectEncoding = Encoding.UTF8;
             mail_turno.Body = "Fecha: "+ dtp_fechaturno.SelectedDate.Value.ToString("yyyy/MM/dd") + "     Hora: "+cbx_horaturno.Text+"\n" +
                 "Cliente: "+txt_nombrecliente.Text+"   Teléfono: "+txt_telefcliente.Text+"\n" +
                 "Tatuaje: "+cbx_motivo.Text+"     Tamaño: "+txt_tamañotatu.Text+"     Lugar: "+cbx_lugar.Text+"\n" +
                 "Duración de la sesión: "+cbx_tiempotatu.Text;
-            mail_turno.BodyEncoding = System.Text.Encoding.UTF8;
+            mail_turno.BodyEncoding = Encoding.UTF8;
             mail_turno.From = new MailAddress("endoftheline.92@gmail.com");
 
             SmtpClient cliente_correo = new SmtpClient();
@@ -222,6 +236,19 @@ namespace prototipo_interfaz
             catch (Exception error)
             {
                 MessageBox.Show("Error al enviar correo: " + error);
+            }
+
+        }
+
+        private bool ValidarCampos()
+        {
+            if (cbx_tatuador.Text != "" && dtp_fechaturno.Text != "" && cbx_horaturno.Text != "" && txt_telefcliente.Text != "" && txt_nombrecliente.Text != "" && cbx_motivo.Text != "" && cbx_lugar.Text != "" && txt_tamañotatu.Text != "" && cbx_tiempotatu.Text != "" && txt_costotatu.Text != "")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
 
         }

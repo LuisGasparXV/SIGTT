@@ -18,29 +18,37 @@
         <Grid Margin="0,0,0,630" Background="#FF82CCFF">
             <TextBlock Text="Atender un turno asignado" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
         </Grid>
-        <TextBlock Text="Datos del cliente" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Margin="40,50,0,0" FontWeight="Bold" />
+        <TextBlock Text="Buscar turno por:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Margin="40,50,0,0" FontWeight="Bold" />
         <Separator HorizontalAlignment="Left" Height="30" Margin="30,60,0,0" VerticalAlignment="Top" Width="700"/>
-        <TextBox x:Name="txt_nombrecliente" Margin="30,100,0,0" Width="288" Height="50" materialDesign:HintAssist.Hint="Nombre" materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" />
-        <TextBox x:Name="txt_edadcliente" Margin="30,180,0,0" Width="80" Height="50" materialDesign:HintAssist.Hint="Edad" materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" />
-        <ComboBox x:Name="cbx_sexocliente" Height="42" Width="160" materialDesign:HintAssist.Hint="Sexo" materialDesign:HintAssist.IsFloating="True" Margin="240,190,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="16">
+        <TextBox x:Name="txt_nombrecliente" Margin="30,85,0,0" Width="288" Height="50" materialDesign:HintAssist.Hint="Nombre" materialDesign:HintAssist.IsFloating="True" KeyDown="Txt_nombrecliente_KeyDown" MaxLength="40" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" />
+        <TextBlock Text="y/o" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Margin="363,104,0,0" />
+        <TextBox x:Name="txt_telefcliente" Margin="433,80,0,0" Width="180" Height="50" materialDesign:HintAssist.Hint="Telefono" materialDesign:HintAssist.IsFloating="True" PreviewTextInput="Txt_telefcliente_PreviewTextInput" MaxLength="15" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" />
+        <Button x:Name="btn_buscarturno" Content="Buscar" HorizontalAlignment="Left" Margin="676,97,0,0" VerticalAlignment="Top" Click="Btn_buscarturno_Click"  Width="112" Height="29" FontSize="14"/>
+        <TextBlock x:Name="txtbl_buscarturno" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="16" Margin="0,145,0,0" FontWeight="Normal" />
+        
+        <TextBlock Text="Datos del cliente" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Margin="40,207,0,0" FontWeight="Bold" />
+        <Separator HorizontalAlignment="Left" Height="30" Margin="30,217,0,0" VerticalAlignment="Top" Width="700"/>
+        <TextBox x:Name="txt_edadcliente" Margin="30,242,0,0" Width="80" Height="50" materialDesign:HintAssist.Hint="Edad" materialDesign:HintAssist.IsFloating="True" PreviewTextInput="Txt_edadcliente_PreviewTextInput" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" />
+        <ComboBox x:Name="cbx_sexocliente" Height="42" Width="160" materialDesign:HintAssist.Hint="Sexo" materialDesign:HintAssist.IsFloating="True" Margin="240,252,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="16">
             <ComboBoxItem FontSize="16">Masculino</ComboBoxItem>
             <ComboBoxItem FontSize="16">Femenino</ComboBoxItem>
-            <ComboBoxItem FontSize="16">Prefiero no decirlo</ComboBoxItem>
         </ComboBox>
-        <TextBox x:Name="txt_canttatoocliente" Margin="500,180,0,0" Width="160" Height="50" materialDesign:HintAssist.Hint="Cantidad de tatuajes" materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" />
-        <TextBox x:Name="txt_profesioncliente" Margin="30,260,0,0" Width="400" Height="50" materialDesign:HintAssist.Hint="Profesion" materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" />
-        <ComboBox x:Name="cbx_hemofilia" Height="42" Width="140" materialDesign:HintAssist.Hint="¿Es hemofílico?" materialDesign:HintAssist.IsFloating="True" Margin="30,350,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="16">
+        <TextBox x:Name="txt_canttatoocliente" Margin="500,242,0,0" Width="160" Height="50" materialDesign:HintAssist.Hint="Cantidad de tatuajes" materialDesign:HintAssist.IsFloating="True" PreviewTextInput="Txt_canttatoocliente_PreviewTextInput" MaxLength="4" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" />
+        <TextBox x:Name="txt_profesioncliente" Margin="30,322,0,0" Width="400" Height="50" materialDesign:HintAssist.Hint="Profesion" materialDesign:HintAssist.IsFloating="True" KeyDown="Txt_profesioncliente_KeyDown" MaxLength="30" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" />
+        <ComboBox x:Name="cbx_hemofilia" Height="42" Width="140" materialDesign:HintAssist.Hint="¿Es hemofílico?" materialDesign:HintAssist.IsFloating="True" Margin="30,412,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="16">
             <ComboBoxItem FontSize="16">No</ComboBoxItem>
             <ComboBoxItem FontSize="16">Si</ComboBoxItem>
         </ComboBox>
-        <ComboBox x:Name="cbx_daltonismo" Height="42" Width="140" materialDesign:HintAssist.Hint="¿Es daltónico?" materialDesign:HintAssist.IsFloating="True" Margin="250,350,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="16">
+        <ComboBox x:Name="cbx_daltonismo" Height="42" Width="140" materialDesign:HintAssist.Hint="¿Es daltónico?" materialDesign:HintAssist.IsFloating="True" Margin="250,412,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="16">
             <ComboBoxItem FontSize="16">No</ComboBoxItem>
             <ComboBoxItem FontSize="16">Si</ComboBoxItem>
         </ComboBox>
+
+        <TextBlock x:Name="txtbl_camposvacios" HorizontalAlignment="Center" Foreground="#FFE42525" VerticalAlignment="Top" FontSize="16" Margin="0,510,0,0" FontWeight="Normal" />
+        <Button x:Name="btn_atenderturno" Content="Atender" HorizontalAlignment="Left" Margin="192,565,0,0" VerticalAlignment="Top" Width="180" Height="40" Click="Btn_atenderturno_Click" FontSize="18" IsEnabled="False"/>
+        <Button x:Name="btn_cancelaratender" Content="Cancelar" HorizontalAlignment="Left" Margin="460,565,0,0" VerticalAlignment="Top" Width="180" Height="40" Click="Btn_cancelaratender_Click" FontSize="18"/>
         
-        <Button x:Name="btn_atenderturno" Content="Atender" HorizontalAlignment="Left" Margin="160,550,0,0" VerticalAlignment="Top" Width="180" Height="40" Click="Btn_atenderturno_Click" FontSize="18" IsEnabled="False"/>
-        <Button x:Name="btn_cancelaratender" Content="Cancelar" HorizontalAlignment="Left" Margin="465,550,0,0" VerticalAlignment="Top" Width="180" Height="40" Click="Btn_cancelaratender_Click" FontSize="18"/>
-        <Button x:Name="btn_buscarturno" Content="Buscar" HorizontalAlignment="Left" Margin="413,121,0,0" VerticalAlignment="Top" Click="Btn_buscarturno_Click"  Width="112" Height="29" FontSize="14"/>
+        
 
     </Grid>
 </Window>

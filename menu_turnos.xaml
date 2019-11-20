@@ -17,15 +17,18 @@
 
     <Grid Height="670" Width="1050" Background="#FFF9F9F9">
         <Label Content="Buscar turno por:" HorizontalAlignment="Left" Margin="30,45,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <DataGrid x:Name="grd_turnos" HorizontalAlignment="Left" Height="519" Width="831" Margin="30,100,0,0" VerticalAlignment="Top"  Background="#FFEEEEEE" HeadersVisibility="Column" SelectionChanged="Grd_turnos_SelectionChanged" />
-        <TextBox x:Name="txt_nombrecliente" Margin="180,24,0,0" Width="283" Height="50" materialDesign:HintAssist.Hint="Nombre de cliente" materialDesign:HintAssist.IsFloating="True" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <DataGrid x:Name="grd_turnos" HorizontalAlignment="Left" Height="493" Width="831" Margin="30,126,0,0" VerticalAlignment="Top"  Background="#FFEEEEEE" HeadersVisibility="Column" SelectionChanged="Grd_turnos_SelectionChanged" />
+        <TextBox x:Name="txt_nombrecliente" Margin="180,24,0,0" Width="268" Height="50" materialDesign:HintAssist.Hint="Nombre de cliente" materialDesign:HintAssist.IsFloating="True" KeyDown="Txt_nombrecliente_KeyDown" MaxLength="40" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBlock Text="y/o" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14" Margin="490,52,0,0" />
+        <TextBox x:Name="txt_telefcliente" Margin="540,24,0,0" Width="133" Height="50" materialDesign:HintAssist.Hint="Teléfono" materialDesign:HintAssist.IsFloating="True" PreviewTextInput="Txt_telefcliente_PreviewTextInput" MaxLength="15" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-        <Button x:Name="btn_agregarturno"  Content="Agregar Turno" HorizontalAlignment="Center" Margin="870,100,0,0" VerticalAlignment="Top" Width="135" FontSize="14" Click="Btn_agregarturno_Click" />
-        <Button x:Name="btn_modifturno" Content="Modificar Turno" HorizontalAlignment="Center" Margin="870,145,0,0" VerticalAlignment="Top" Width="135" FontSize="14" Click="Btn_modifturno_Click"/>
-        <Button x:Name="btn_eliminarturno" Content="Eliminar Turno" HorizontalAlignment="Center" Margin="870,190,0,0" VerticalAlignment="Top" Width="135" FontSize="14" Click="Btn_eliminarturno_Click"/>
+        <Button x:Name="btn_agregarturno"  Content="Agregar Turno" HorizontalAlignment="Center" Margin="890,128,25,0" VerticalAlignment="Top" Width="135" FontSize="14" Click="Btn_agregarturno_Click" />
+        <Button x:Name="btn_modifturno" Content="Modificar Turno" HorizontalAlignment="Center" Margin="890,172,25,0" VerticalAlignment="Top" Width="135" FontSize="14" Click="Btn_modifturno_Click"/>
+        <Button x:Name="btn_eliminarturno" Content="Eliminar Turno" HorizontalAlignment="Center" Margin="890,218,25,0" VerticalAlignment="Top" Width="135" FontSize="14" Click="Btn_eliminarturno_Click"/>
 
-        <Button x:Name="btn_atenderturno" Content="Atender Turno" HorizontalAlignment="Center" Margin="870,260,0,0" VerticalAlignment="Top" Width="135" FontSize="14" Click="Btn_atenderturno_Click"/>
-        <Button x:Name="btn_buscarturno"  Content="Buscar" HorizontalAlignment="Center" Margin="512,42,430,0" VerticalAlignment="Top" Width="108" FontSize="14" Click="Btn_buscarturno_Click" />
+        <Button x:Name="btn_atenderturno" Content="Atender Turno" HorizontalAlignment="Center" Margin="890,288,25,0" VerticalAlignment="Top" Width="135" FontSize="14" Click="Btn_atenderturno_Click"/>
+        <Button x:Name="btn_buscarturno"  Content="Buscar" HorizontalAlignment="Center" Margin="753,44,189,0" VerticalAlignment="Top" Width="108" FontSize="14" Click="Btn_buscarturno_Click" />
+        <TextBlock x:Name="txtbl_buscarturno" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="16" Margin="0,90,0,0" FontWeight="Normal" />
 
 
 

@@ -101,12 +101,14 @@ namespace prototipo_interfaz
 
         public void CargarHorarios(ComboBox cboxhora, String tatuador, String fecha)
         {
-
-            
-
+            //Lista completa con id, horarios, duracion y modulos
             List<horariosocupados> horasocupadas = new List<horariosocupados>();
+
+            //lista solo de horarios ocupados
             List<string> horariosocup = new List<string>();
+            //lista de horarios disponibles
             List<string> horariosdisp = new List<string>();
+            //Cargar por defecto todos los horarios como disponibles
             horariosdisp.Add("09:30");
             horariosdisp.Add("10:00");
             horariosdisp.Add("10:30");
@@ -126,8 +128,6 @@ namespace prototipo_interfaz
             horariosdisp.Add("20:30");
             horariosdisp.Add("21:00");
             horariosdisp.Add("21:30");
-
-
 
             /*cboxhora.ItemsSource = null;
             cboxhora.DisplayMemberPath = "Tiempoduracion";
@@ -196,8 +196,6 @@ namespace prototipo_interfaz
                             horariosocup.Add(pivothorario.ToString("HH:mm"));
                         }
                     }
-                    
-                    
                 }
 
                 //quitamos los horarios ocupados de la lista de horarios disponibles
@@ -205,9 +203,7 @@ namespace prototipo_interfaz
                 
             }
 
-
             cboxhora.Items.Clear();
-            
             
             cboxhora.ItemsSource = horariosdisp;
         }

@@ -21,6 +21,11 @@ namespace prototipo_interfaz
     /// <summary>
     /// Lógica de interacción para MainWindow.xaml
     /// </summary>
+    /// 
+    // Version 1.2.4
+    // Fecha            Motivo
+    // 28/10/2019       Nueva funcionalidad: Control disponibilidad
+    // 17/11/2019       Nueva funcionalidad: validacion de campos
     public partial class MainWindow : Window
     {
        
